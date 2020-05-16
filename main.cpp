@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
 //    FileReader reader("Src.txt");
-//    Compilation compilation;
+//    Interpretation compilation;
 //    string line;
 //    while (line = reader.readLine()) {
 //        Variable variable = compilation.process(line);

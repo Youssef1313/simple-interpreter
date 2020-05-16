@@ -1,3 +1,0 @@
-D:/SSP/4th term/DS/simple-interpreter/cmake-build-debug/CMakeFiles/simple_interpreter.dir
-D:/SSP/4th term/DS/simple-interpreter/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/SSP/4th term/DS/simple-interpreter/cmake-build-debug/CMakeFiles/rebuild_cache.dir

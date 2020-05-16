@@ -1,0 +1,13 @@
+//
+// Created by Youssef on 16/05/2020.
+//
+
+#ifndef SIMPLE_INTERPRETER_STATEMENTTYPE_H
+#define SIMPLE_INTERPRETER_STATEMENTTYPE_H
+
+enum StatementType {
+    ASSIGNMENT,
+    INVALID
+};
+
+#endif //SIMPLE_INTERPRETER_STATEMENTTYPE_H

@@ -1,11 +1,8 @@
-//
-// Created by Youssef on 16/05/2020.
-//
-
 #ifndef SIMPLE_INTERPRETER_FILEREADER_H
 #define SIMPLE_INTERPRETER_FILEREADER_H
 
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -20,7 +17,7 @@ using namespace std;
  */
 class FileReader {
 private:
-    // TODO: some field to track where we're on the file. (Perhaps, a file pointer?)
+    ifstream file;
 public:
     FileReader(string filePath);
     string readNextLine();

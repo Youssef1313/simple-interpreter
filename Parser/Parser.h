@@ -6,7 +6,7 @@
 #define SIMPLE_INTERPRETER_PARSER_H
 
 #include <string>
-#include "../Statement.h"
+#include "../Statements/Statement.h"
 
 using namespace std;
 

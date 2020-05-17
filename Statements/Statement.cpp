@@ -1,13 +1,7 @@
-//
-// Created by Mhnd Bshar on 5/17/2020.
-//
-
+#include <bits/stdc++.h>
 #include "Statement.h"
 
-bool Statement::isValid(string statement) {
-    return false;
-}
-
-Statement::Statement(string statement) {
+Statement::Statement(string statement, unordered_map<string, double> variables) {
     this->statement =  statement;
+    this->variables = variables;
 }

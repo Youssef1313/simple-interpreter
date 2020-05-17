@@ -1,16 +1,18 @@
 #ifndef SIMPLE_INTERPRETER_STATEMENT_H
 #define SIMPLE_INTERPRETER_STATEMENT_H
+
+#include <bits/stdc++.h>
 #include <string>
 
 using namespace std;
 
 class Statement {
-private:
+protected:
     string statement;
+    unordered_map<string, double> variables;
 
 public:
-    Statement(string statement);
-    static bool isValid(string statement);
+    Statement(string statement, unordered_map<string, double> variables);
     virtual void execute() = 0;
 };
 

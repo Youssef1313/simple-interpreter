@@ -5,10 +5,14 @@ image: gcc
 before_script:
  - apt-get update --yes
  - apt-get install --yes cmake
- - cmake --version
 
 build:
   stage: build
   script:
-    - cmake .
-    - cmake --build .
+    - mkdir cmake-build-debug && cd cmake-build-debug
+    - cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - cd ..
+    - cmake --build cmake-build-debug -- -j 8
+    - ./cmake-build-debug/test_runner
+    
+# TODO: It's bad that the test stage is included in the build stage. They should be separated

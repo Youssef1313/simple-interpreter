@@ -3,4 +3,4 @@ project(simple_interpreter)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(simple_interpreter main.cpp Statements/AssignmentStatement.cpp Statements/AssignmentStatement.h FileReader.cpp FileReader.h Parser/Parser.cpp Parser/Parser.h Parser/StatementValidator.cpp Parser/StatementValidator.h Parser/StatementType.h ExpressionEvaluator.cpp ExpressionEvaluator.h Interpretation.cpp Interpretation.h Statements/Statement.cpp Statements/Statement.h)
+add_executable(simple_interpreter main.cpp Statements/AssignmentStatement.cpp Statements/AssignmentStatement.h FileReader.cpp FileReader.h Parser/Parser.cpp Parser/Parser.h Parser/StatementValidator.cpp Parser/StatementValidator.h Parser/StatementType.h ExpressionEvaluator.cpp ExpressionEvaluator.h Interpretation.cpp Interpretation.h Statements/Statement.cpp Statements/Statement.h Collections/Stack.h)

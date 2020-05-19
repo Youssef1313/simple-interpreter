@@ -1,3 +1,8 @@
+/*
+ * this class only check that variables names rules applied,
+ * it doesn't check Expression Correctness
+ */
+
 #ifndef SIMPLE_INTERPRETER_ASSIGNMENTSTATEMENT_H
 #define SIMPLE_INTERPRETER_ASSIGNMENTSTATEMENT_H
 
@@ -19,6 +24,7 @@ public:
     // The constructor here assumes that the statement is always correct.
     // The constructor needs the variables map, so that the execute method can put the new value in it.
     void execute();
+    static bool isValid(string statement);
     const string &getVariableName() const;
     const string &getValueExpression() const;
 

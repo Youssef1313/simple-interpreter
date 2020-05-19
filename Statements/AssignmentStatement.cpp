@@ -24,3 +24,18 @@ void AssignmentStatement::execute() {
     // TODO: variableValue should be returned from expression evaluator.
     variables[variableName] = variableValue;
 }
+
+bool AssignmentStatement::isValid(string statement) {
+    if (statement.length() == 0) return false;
+    int i = 0;
+    while (statement[i] == ' ') i++; // skip leading whitespaces.
+    if (!isalpha(statement[i]) || !statement[i] == '_') return false; // variable must start with letter or underscore. (Same as python rules).
+    string variableName = "";
+    while (isalpha(statement[i]) || isdigit(statement[i]) || statement[i] == '_') {
+        variableName.push_back(statement[i]);
+        i++;
+    }
+    while (statement[i] == ' ') i++; // skip leading whitespaces.
+    return statement[i] == '=';
+
+}

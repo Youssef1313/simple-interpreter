@@ -37,6 +37,8 @@ TEST(EvaluationTests, EvaluationTest) {
     ASSERT_EQ(ExpressionEvaluator("-+3", map).evaluate(), -+3);
     ASSERT_EQ(ExpressionEvaluator("2^1^3", map).evaluate(), 2);
     ASSERT_EQ(ExpressionEvaluator("-2^3", map).evaluate(), -8);
+    ASSERT_EQ(ExpressionEvaluator("-2^2", map).evaluate(), -4);
+    ASSERT_EQ(ExpressionEvaluator("(-2)^2", map).evaluate(), 4);
 
 /*
  * To be added.

@@ -153,8 +153,8 @@ int ExpressionEvaluator::getPriority(char op) {
     if (op == '(') return 0;
     if (op == '+' || op == '-') return 1;
     if (op == '*' || op == '/') return 2;
-    if (op == '^') return 3;
-    if (op == '@' || op == '$') return 4;
+    if (op == '@' || op == '$') return 3;
+    if (op == '^') return 4;
     string errorMessage = "Unsupported operation '";
     errorMessage.push_back(op);
     errorMessage.push_back('\'');

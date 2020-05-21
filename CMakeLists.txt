@@ -9,7 +9,7 @@ add_subdirectory(lib/gtest)
 include_directories(lib/gtest/googletest/include)
 include_directories(lib/gtest/googlemock/include)
 
-add_executable(simple_interpreter main.cpp Statements/AssignmentStatement.cpp Statements/AssignmentStatement.h FileReader.cpp FileReader.h Parser/Parser.cpp Parser/Parser.h Parser/StatementValidator.cpp Parser/StatementValidator.h Parser/StatementType.h Evaluation/ExpressionEvaluator.cpp Evaluation/ExpressionEvaluator.h Interpretation.cpp Interpretation.h Statements/Statement.cpp Statements/Statement.h Collections/Stack.h)
+add_executable(simple_interpreter main.cpp Statements/AssignmentStatement.cpp Statements/AssignmentStatement.h FileReader.cpp FileReader.h Parser/Parser.cpp Parser/Parser.h Parser/StatementValidator.cpp Parser/StatementValidator.h Parser/StatementType.h Evaluation/ExpressionEvaluator.cpp Evaluation/ExpressionEvaluator.h Interpretation.cpp Interpretation.h Statements/Statement.cpp Statements/Statement.h Collections/Stack.h Collections/BST.h Collections/Heap.h)
 add_executable(test_runner Tests/main.cpp Tests/EvaluationTests.cpp)
 
 target_link_libraries(test_runner gtest gtest_main)

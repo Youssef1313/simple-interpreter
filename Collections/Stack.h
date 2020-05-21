@@ -6,6 +6,7 @@
 
 #ifndef SIMPLE_INTERPRETER_STACK_H
 #define SIMPLE_INTERPRETER_STACK_H
+
 #include <stdlib.h>
 
 template<typename T>

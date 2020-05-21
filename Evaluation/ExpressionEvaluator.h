@@ -12,7 +12,9 @@ private:
     unordered_map<string, double> variables;
     bool isOperation(char c);
     string convertToPostfix();
+    bool isHigherOrEqualPriority(char op1, char op2);
     bool isHigherPriority(char op1, char op2);
+    bool isLeftAssociative(char op);
     int getPriority(char op);
     double performOperation(double num1, double num2, char op);
 

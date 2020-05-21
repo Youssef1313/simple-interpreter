@@ -11,7 +11,7 @@ double ExpressionEvaluator::evaluate() {
     string token;
     istringstream stream(postfix);
     stack<double> stack;
-    cout << "DEBUG: " << postfix << endl;
+    //cout << "DEBUG: " << postfix << endl;
     while (stream >> token) {
         if (token.length() == 1 && isOperation(token[0])) {
             if (stack.size() < 2) throw "Invalid expression. Missing an operand..";
@@ -21,24 +21,13 @@ double ExpressionEvaluator::evaluate() {
             stack.pop();
             stack.push(performOperation(num1, num2, token[0]));
         } else if (token.length() == 1 && token[0] == '@') {
-            // We wish to refactor the code and add isUnaryOperator and performUnaryOperation methods.
-            // But.. If it works, don't touch it.
             if (stack.size() < 1) throw "Invalid expression. Missing an operand....";
             double num = stack.top();
             stack.pop();
             stack.push(-num);
         } else if (token.length() == 1 && token[0] == '$') {
             if (stack.size() < 1) throw "Invalid expression. Missing an operand....";
-        }
-        else {
-            // stof fails for an input like "--7". Manually fixing it.
-            //bool isNegative = false;
-            //int i = 0;
-            //while (token[i] == '-') {
-            //    isNegative = !isNegative;
-            //    i++;
-            //}
-            //stack.push(std::stof(token.substr(i)) * (isNegative ? -1 : 1));
+        } else {
             stack.push(std::stof(token));
         }
     }
@@ -54,33 +43,32 @@ string ExpressionEvaluator::convertToPostfix() {
     string result = "";
     for (int i = 0; i < expression.length(); i++) {
         if (expression[i] == ' ') continue;
-        if (isUnaryOperator && expression[i] == '-') { // Unary operator
-            // To distinguish it later, I'll push it as "@".
-            while (!stack.empty() && isHigherPriority(stack.top(), '@')) {
+        if (isOperation(expression[i])) {
+            char op = expression[i];
+            if (isUnaryOperator) {
+                // To distinguish it later, I'll push it as "@" or $.
+                if (op == '+') op = '$';
+                else if (op == '-') op = '@';
+            }
+            /* Why we use isHigherPriority for unary operators, and isHigherOrEqualPriority for binary?
+             * Read the Shunting-yard algo at Wikipedia: https://en.wikipedia.org/wiki/Shunting-yard_algorithm
+             *
+             * and ((the operator at the top of the operator stack has greater precedence)
+             *  or (the operator at the top of the operator stack has equal precedence and the token is left associative))
+             *
+             *  Unary operators are right-associative.
+             */
+            while (!stack.empty() &&
+                   (isHigherPriority(stack.top(), op) ||
+                    (isHigherOrEqualPriority(stack.top(), op) && isLeftAssociative(op)))
+                    ) {
                 result.push_back(' ');
                 result.push_back(stack.top());
                 stack.pop();
             }
-            stack.push('@');
+            stack.push(op);
             isPreviousAValue = false;
-        } else if (isUnaryOperator && expression[i] == '+') { // Unary +
-            while (!stack.empty() && isHigherPriority(stack.top(), '$')) {
-                result.push_back(' ');
-                result.push_back(stack.top());
-                stack.pop();
-            }
-            stack.push('$');
-            isPreviousAValue = false;
-        }
-        else if (isOperation(expression[i])) {
             isUnaryOperator = true;
-            while (!stack.empty() && isHigherPriority(stack.top(), expression[i])) {
-                result.push_back(' ');
-                result.push_back(stack.top());
-                stack.pop();
-            }
-            stack.push(expression[i]);
-            isPreviousAValue = false;
         } else if (expression[i] == '(') {
             int j = i + 1;
             while (j < expression.size()) {
@@ -93,8 +81,11 @@ string ExpressionEvaluator::convertToPostfix() {
             isPreviousAValue = false;
         } else if (expression[i] == ')') {
             isUnaryOperator = false;
-            if (i == 0 || stack.size() == 0) throw "Invalid expression. Unexpected token ')'.";
+            // Throw instead of trying to access top in an empty stack.
+            if (stack.size() == 0) throw "Invalid expression. Unexpected token ')'.";
             while (stack.top() != '(') {
+                // Throw instead of trying to pop in an empty stack.
+                if (stack.size() == 0) throw "Invalid expression. Unexpected token ')'.";
                 result.push_back(' ');
                 result.push_back(stack.top());
                 stack.pop();
@@ -116,12 +107,18 @@ string ExpressionEvaluator::convertToPostfix() {
     }
 
     while (!stack.empty()) {
-        if (!isOperation(stack.top()) && stack.top() != '@' && stack.top() != '$') throw "Invalid expression. Missing parenthesis.";
+        if (!isOperation(stack.top()) && stack.top() != '@' && stack.top() != '$')
+            throw "Invalid expression. Missing parenthesis.";
         result.push_back(' ');
         result.push_back(stack.top());
         stack.pop();
     }
     return result;
+}
+
+bool ExpressionEvaluator::isLeftAssociative(char op) {
+    if (op == '^' || op == '@' || op == '$') return false;
+    return true;
 }
 
 bool ExpressionEvaluator::isOperation(char c) {
@@ -130,13 +127,14 @@ bool ExpressionEvaluator::isOperation(char c) {
            c == '^';
 }
 
+bool ExpressionEvaluator::isHigherOrEqualPriority(char op1, char op2) {
+    return getPriority(op1) >= getPriority(op2);
+}
+
 bool ExpressionEvaluator::isHigherPriority(char op1, char op2) {
     return getPriority(op1) > getPriority(op2);
 }
-/*
-* 5 + 7 (  )
- * 5 7 +
- */
+
 int ExpressionEvaluator::getPriority(char op) {
     if (op == '(') return 0;
     if (op == '+' || op == '-') return 1;

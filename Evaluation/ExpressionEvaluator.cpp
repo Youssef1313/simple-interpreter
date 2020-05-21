@@ -11,7 +11,7 @@ double ExpressionEvaluator::evaluate() {
     string token;
     istringstream stream(postfix);
     stack<double> stack;
-    //cout << "DEBUG: " << postfix << endl;
+    cout << "DEBUG: " << postfix << endl;
     while (stream >> token) {
         if (token.length() == 1 && isOperation(token[0])) {
             if (stack.size() < 2) throw "Invalid expression. Missing an operand..";
@@ -80,7 +80,6 @@ string ExpressionEvaluator::convertToPostfix() {
             isUnaryOperator = true;
             isPreviousAValue = false;
         } else if (expression[i] == ')') {
-            isUnaryOperator = false;
             // Throw instead of trying to access top in an empty stack.
             if (stack.size() == 0) throw "Invalid expression. Unexpected token ')'.";
             while (stack.top() != '(') {
@@ -92,17 +91,32 @@ string ExpressionEvaluator::convertToPostfix() {
             }
             stack.pop();
             isPreviousAValue = false;
+            isUnaryOperator = false;
         } else {
             if (isPreviousAValue) throw "Invalid expression. Expected an operator.";
-            isUnaryOperator = false;
-            string number = " "; // space to be appended in result.
-            while (isdigit(expression[i]) || expression[i] == '.') {
-                number.push_back(expression[i++]);
+            if (isalpha(expression[i]) || expression[i] == '_') {
+                string variableName = "";
+                while (isdigit(expression[i]) || isalpha(expression[i]) || expression[i] == '_') {
+                    variableName.push_back(expression[i++]);
+                }
+                i--; // prevent skipping a character.
+                unordered_map<string, double>::const_iterator foundValue = variables.find(variableName);
+                if (foundValue == variables.end()) {
+                    throw "Undeclared variable '" + variableName + "'\n";
+                } else {
+                    result += " " + to_string(foundValue->second);
+                }
+            } else {
+                string number = " "; // space to be appended in result.
+                while (isdigit(expression[i]) || expression[i] == '.') {
+                    number.push_back(expression[i++]);
+                }
+                i--; // prevent skipping a character.
+                // TODO: Check valid number?
+                result += number;
             }
-            i--; // prevent skipping a character.
-            // TODO: Check valid number?
-            result += number;
             isPreviousAValue = true;
+            isUnaryOperator = false;
         }
     }
 

@@ -25,7 +25,7 @@ int main() {
         ExpressionEvaluator eval(line, map);
         try {
             double result = eval.evaluate();
-            cout << "The result is: " << result << endl << endl;
+            cout << "The result is: " << to_string(result) << endl << endl;
         } catch (const char *e) {
             cout << e << endl;
         } catch (string e) {

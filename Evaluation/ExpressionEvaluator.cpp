@@ -11,7 +11,6 @@ double ExpressionEvaluator::evaluate() {
     string token;
     istringstream stream(postfix);
     stack<double> stack;
-    cout << "DEBUG: " << postfix << endl;
     while (stream >> token) {
         if (token.length() == 1 && isOperation(token[0])) {
             if (stack.size() < 2) throw "Invalid expression. Missing an operand..";
@@ -41,7 +40,7 @@ string ExpressionEvaluator::convertToPostfix() {
     bool isPreviousAValue = false;
     stack<char> stack;
     string result = "";
-    for (int i = 0; i < expression.length(); i++) {
+    for (int i = 0; i < (int)expression.length(); i++) {
         if (expression[i] == ' ') continue;
         if (isOperation(expression[i])) {
             char op = expression[i];
@@ -71,7 +70,7 @@ string ExpressionEvaluator::convertToPostfix() {
             isUnaryOperator = true;
         } else if (expression[i] == '(') {
             int j = i + 1;
-            while (j < expression.size()) {
+            while (j < (int)expression.size()) {
                 if (expression[j] == ')') throw "Invalid expression. Expected expression inside parenthesis.";
                 if (expression[j++] == ' ') continue;
                 break;

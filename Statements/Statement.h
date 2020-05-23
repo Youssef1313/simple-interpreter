@@ -9,10 +9,10 @@ using namespace std;
 class Statement {
 protected:
     string statement;
-    unordered_map<string, double> variables;
+    unordered_map<string, double> *variables;
+    Statement(string statement, unordered_map<string, double> *variables);
 
 public:
-    Statement(string statement, unordered_map<string, double> variables);
     virtual void execute() = 0;
 };
 

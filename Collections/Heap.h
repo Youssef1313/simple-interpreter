@@ -4,23 +4,24 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 template<class k, class v>
 struct HeapNode {
     k key;
     v value;
-
     HeapNode(k key, v value) : key(key), value(value) {}
 };
 
 template<class k, class v>
 class Heap {
 private:
-    std::vector<struct HeapNode<k, v> *> arr;
+    vector<struct HeapNode<k, v> *> arr;
     int index;
 
     void bubbleUp() {
         int i = index;
-        while (index != 0 && (v) arr[i]->value > (v) arr[getParent(i)]->value) {
+        while (i > 0 && !isValidParent(getParent(i))) {
             swap(i, getParent(i));
             i = getParent(i);
         }
@@ -35,29 +36,19 @@ private:
         arr[largest]->key = (k) tempk;
     }
 
-public:
-    Heap() {
-        index = -1;
-    }
-
-    void put(k key, v value) {
-        index++;
-        arr.push_back(new HeapNode<k, v>(key, value));
-        bubbleUp();
-    }
-
-    void extractMin() {
-        if (index == -1)
-            return;
-        int i = 0;
-        std::cout << "Key : " << (k) arr[i]->key << " Value : " << (v) arr[i]->value << endl;
-        swap(i, index);
-        index--;
+    void bubbleDown(int i) {
         while (i <= index && !isValidParent(i)) {
             int larger = largeChild(i);
             swap(i, larger);
             i = larger;
         }
+    }
+
+    void extractMin() {
+        if (index == -1)
+            throw "empty heap";
+        swap(0, index--);
+        bubbleDown(0);
     }
 
     int getParent(int i) {
@@ -83,7 +74,10 @@ public:
     bool hasRight(int i) {
         return getRight(i) <= index;
     }
-
+    /*
+     * this function get node index,
+     * then check if node need to be bubbled up.
+     */
     bool isValidParent(int i) {
         if (!hasLeft(i))
             return true;
@@ -99,6 +93,33 @@ public:
             return getLeft(i);
         return (v) arr[getLeft(i)]->value > (v) arr[getRight(i)]->value ? getLeft(i) : getRight(i);
     }
+
+public:
+    Heap() {
+        index = -1;
+    }
+
+    Heap(int size) {
+        arr.reserve(size);
+        index = -1;
+    }
+
+    void put(k key, v value) {
+        arr.push_back(new HeapNode<k, v>(key, value));
+        index++;
+        bubbleUp();
+    }
+
+    void sort() {
+        for (int i = arr.size(); i; --i) extractMin();
+    }
+
+    void print(){
+        cout << "sorted by value :" << endl; /// assuming it is sorted
+        for(int i = 0; i < arr.size(); ++i)
+            cout << "Key : " << (k) arr[i]->key << " Value : " << (v) arr[i]->value << endl;
+    }
+    
 };
 
 

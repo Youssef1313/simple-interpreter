@@ -8,12 +8,13 @@ using namespace std;
 
 class Interpretation {
 private:
-  unordered_map<string, double> variables;
+    unordered_map<string, double> variables;
 public:
-    pair<string, double> process(string line);
     /*
      * Parse the line, then call execute on the returned statement.
      */
+    void process(string line);
+    unordered_map<string, double> getVariables() const;
 };
 
 

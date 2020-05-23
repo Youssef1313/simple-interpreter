@@ -1,10 +1,13 @@
 #include <stdio.h>
+#include <string>
 #include "FileReader.h"
+
+using namespace std;
 
 FileReader::FileReader(string filePath) {
     file.open(filePath);
     if (file.fail()) {
-        throw "File cannot be read.";
+        throw string("File cannot be read.");
     }
 
 }
@@ -16,5 +19,5 @@ string FileReader::readNextLine() {
         return line;
     }
     file.close();
-    throw "End of file";
+    throw string("End of file");
 }

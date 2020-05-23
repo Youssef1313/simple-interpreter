@@ -1,39 +1,22 @@
 #include <iostream>
 #include <string>
-#include "Evaluation/ExpressionEvaluator.h"
+#include "Interpretation.h"
+#include "FileReader.h"
 
 using namespace std;
 
 int main() {
-//    FileReader reader("Src.txt");
-//    Interpretation compilation;
-//    string line;
-//    while (line = reader.readLine()) {
-//        Variable variable = compilation.process(line);
-//        /*
-//         * Internally, the process method will parse the instruction, evaluate the expression, and
-//         * return the variable name and its value (Variable can be a struct).
-//         */
-//        // TODO: Add the variable to BST and heap.
-//
-//    }
-    while (true) {
-        cout << "> ";
-        string line;
-        getline(cin, line);
-        unordered_map<string, double> map;
-        ExpressionEvaluator eval(line, map);
-        try {
-            double result = eval.evaluate();
-            cout << "The result is: " << to_string(result) << endl << endl;
-        } catch (const char *e) {
-            cout << e << endl;
-        } catch (string e) {
-            cout << e << endl;
-        }
-
-
+    Interpretation interpretation;
+    try {
+        FileReader reader("D:\\Src.txt");
+        while (true)
+            interpretation.process(reader.readNextLine());
+    } catch (string ex) {
+        if (ex != "End of file") cout << ex << endl;
     }
-
+    auto map = interpretation.getVariables();
+    for (auto variable : map) {
+        cout << variable.first << " = " << to_string(variable.second) << endl;
+    }
     return 0;
 }

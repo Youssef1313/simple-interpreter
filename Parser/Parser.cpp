@@ -1,6 +1,7 @@
 #include "Parser.h"
+#include "../Evaluation/Value.h"
 
-Statement *Parser::parse(string statement, unordered_map<string, double> *map) {
+Statement *Parser::parse(string statement, unordered_map<string, Value> *map) {
     // Read until you find '#', then stop.
     // The '#' character means the rest of the line is a comment.
     int lengthBeforeComment = 0;

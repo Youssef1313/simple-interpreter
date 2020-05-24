@@ -9,6 +9,6 @@ void Interpretation::process(string line) {
 
 }
 
-unordered_map<string, double> Interpretation::getVariables() const {
+unordered_map<string, Value> Interpretation::getVariables() const {
     return variables;
 }

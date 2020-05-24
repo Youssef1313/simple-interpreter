@@ -1,6 +1,6 @@
 #include "Statement.h"
 
-Statement::Statement(string statement, unordered_map<string, double> *variables) {
+Statement::Statement(string statement, unordered_map<string, Value> *variables) {
     this->statement = statement;
     this->variables = variables;
 }

@@ -3,24 +3,29 @@
 
 #include <string>
 #include <bits/stdc++.h>
+#include "Value.h"
+#include "Operator.h"
 
 using namespace std;
 
 class ExpressionEvaluator {
 private:
     string expression;
-    unordered_map<string, double> variables;
-    bool isOperation(char c);
+    unordered_map<string, Value> variables;
+    static Operator getOperatorFromToken(string token);
+    static string getTokenFromOperator(Operator op);
+    static bool isUnaryOperator(Operator op);
+    static bool isOperation(char c);
+    static bool isHigherOrEqualPriority(Operator op1, Operator op2);
+    static bool isHigherPriority(Operator op1, Operator op2);
+    static bool isLeftAssociative(Operator op);
+    static int getPriority(Operator op);
+    static Value performOperation(Value left, Value right, Operator op);
     string convertToPostfix();
-    bool isHigherOrEqualPriority(char op1, char op2);
-    bool isHigherPriority(char op1, char op2);
-    bool isLeftAssociative(char op);
-    int getPriority(char op);
-    double performOperation(double num1, double num2, char op);
 
 public:
-    ExpressionEvaluator(string expression, unordered_map<string, double> variables);
-    double evaluate();
+    ExpressionEvaluator(string expression, unordered_map<string, Value> variables);
+    Value evaluate();
 };
 
 

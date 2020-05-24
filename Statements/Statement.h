@@ -3,14 +3,15 @@
 
 #include <bits/stdc++.h>
 #include <string>
+#include "../Evaluation/Value.h"
 
 using namespace std;
 
 class Statement {
 protected:
     string statement;
-    unordered_map<string, double> *variables;
-    Statement(string statement, unordered_map<string, double> *variables);
+    unordered_map<string, Value> *variables;
+    Statement(string statement, unordered_map<string, Value> *variables);
 
 public:
     virtual void execute() = 0;

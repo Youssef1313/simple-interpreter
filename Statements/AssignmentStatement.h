@@ -19,10 +19,12 @@ private:
     string valueExpression;
 
 public:
-    AssignmentStatement(string statement, unordered_map<string, Value> *variables); // The constructor will set the variableName and the valueExpression.
-    // The variableName cannot be a reserved word, this should be handled in the validation, not in this constructor.
-    // The constructor here assumes that the statement is always correct.
-    // The constructor needs the variables map, so that the execute method can put the new value in it.
+    AssignmentStatement(string statement, unordered_map<string, Value> *variables);
+    // Constructor will set variableName and valueExpression.
+    // VariableName cannot be a reserved word, this should be handled in validation, not in this constructor.
+    // Constructor here assumes that the statement is always correct.
+    // Constructor needs variables map, so that execute method can put new value in it.
+
     void execute();
     static bool isValid(string statement);
     const string &getVariableName() const;

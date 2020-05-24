@@ -15,7 +15,10 @@ Statement *Parser::parse(string statement, unordered_map<string, Value> *map) {
         return new AssignmentStatement(statement, map);
     } else if (statementType == INVALID) {
         return NULL;
-    } else {
+    } else if (statementType == IF){
+        return new IfStatement(statement, map);
+    }
+    else {
         throw string("Unexpected StatementType.\n");
     }
 }

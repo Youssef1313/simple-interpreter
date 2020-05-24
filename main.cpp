@@ -13,10 +13,12 @@ int main() {
             interpretation.process(reader.readNextLine());
     } catch (string ex) {
         if (ex != "End of file") cout << ex << endl;
+    } catch (char const* ex) {
+        cout << ex << endl;
     }
     auto map = interpretation.getVariables();
     for (auto variable : map) {
-        cout << variable.first << " = " << to_string(variable.second) << endl;
+        cout << variable.first << " = " << variable.second.toString() << endl;
     }
     return 0;
 }

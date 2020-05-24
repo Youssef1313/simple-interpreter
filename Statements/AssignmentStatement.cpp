@@ -9,7 +9,7 @@ const string &AssignmentStatement::getValueExpression() const {
     return valueExpression;
 }
 
-AssignmentStatement::AssignmentStatement(string statement, unordered_map<string, double> *variables)
+AssignmentStatement::AssignmentStatement(string statement, unordered_map<string, Value> *variables)
         : Statement(statement, variables) {
     int i = 0;
     while (statement[i] == ' ') i++; // skip any whitespaces at beginning.
@@ -22,8 +22,14 @@ AssignmentStatement::AssignmentStatement(string statement, unordered_map<string,
 
 void AssignmentStatement::execute() {
     ExpressionEvaluator evaluator(valueExpression, *variables);
-    double variableValue = evaluator.evaluate();
-    (*variables)[variableName] = variableValue;
+    Value variableValue = evaluator.evaluate();
+    auto it = variables->find(variableName);
+    if (it == variables->end()) {
+        variables->emplace(variableName, variableValue);
+    } else {
+        it->second = variableValue;
+    }
+    //(*variables)[variableName] = variableValue;
 }
 
 bool AssignmentStatement::isValid(string statement) {

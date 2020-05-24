@@ -3,7 +3,8 @@
 
 enum StatementType {
     ASSIGNMENT,
-    INVALID
+    INVALID,
+    IF
 };
 
 #endif //SIMPLE_INTERPRETER_STATEMENTTYPE_H

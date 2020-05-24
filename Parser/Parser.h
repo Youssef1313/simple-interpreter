@@ -5,7 +5,9 @@
 #include "../Statements/Statement.h"
 #include "StatementValidator.h"
 #include "../Statements/AssignmentStatement.h"
+#include "../Statements/IfStatement.h"
 #include "../Evaluation/Value.h"
+
 
 using namespace std;
 

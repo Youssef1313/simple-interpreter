@@ -17,8 +17,7 @@ Statement *Parser::parse(string statement, unordered_map<string, Value> *map) {
         return NULL;
     } else if (statementType == IF){
         return new IfStatement(statement, map);
-    }
-    else {
+    } else {
         throw string("Unexpected StatementType.\n");
     }
 }

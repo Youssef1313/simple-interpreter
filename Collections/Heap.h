@@ -17,7 +17,7 @@ template<class k, class v>
 class Heap {
 private:
     vector<struct HeapNode<k, v> *> arr;
-    int index;
+    int index = -1;
 
     void bubbleUp() {
         int i = index;
@@ -95,13 +95,9 @@ private:
     }
 
 public:
-    Heap() {
-        index = -1;
-    }
-
+    Heap() {}
     Heap(int size) {
         arr.reserve(size);
-        index = -1;
     }
 
     void put(k key, v value) {
@@ -116,8 +112,9 @@ public:
 
     void print(){
         cout << "sorted by value :" << endl; /// assuming it is sorted
-        for(int i = 0; i < arr.size(); ++i)
+        for(unsigned int i = 0; i < arr.size(); ++i)
             cout << "Key : " << (k) arr[i]->key << " Value : " << (v) arr[i]->value << endl;
+        cout << endl << endl;
     }
     
 };

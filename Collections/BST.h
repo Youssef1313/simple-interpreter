@@ -10,6 +10,10 @@ struct Node {
     v value;
     Node *left;
     Node *right;
+
+    Node(k key, v value) : key(key), value(value) {
+        this->right = this->left = NULL;
+    }
 };
 
 template<class k, class v>
@@ -22,17 +26,19 @@ public:
         root = NULL;
     }
 
-    void insert(k key, v value) {
+    void put(k key, v value) {
         root = insert(root, key, value);
     }
 
     void inOrder() {
+        cout << "sorted by variable name" << endl;
         inOrder(root);
+        cout << endl << endl;
     }
 
 private:
     Node<k, v> *insert(struct Node<k, v> *root, k key, v value) {
-        Node<k, v> *node = newNode(key, value);
+        auto *node = new Node<k, v>(key, value);
         if (root == NULL) {
             root = node;
         } else if (root->key > key)
@@ -43,18 +49,8 @@ private:
         return root;
     }
 
-    struct Node<k, v> *newNode(k key, v value) {
-        struct Node<k, v> *node = new Node<k, v>;
-        node->key = key;
-        node->value = value;
-        node->right = NULL;
-        node->left = NULL;
-        return node;
-    }
-
     void inOrder(struct Node<k, v> *root) {
-        if (root == NULL)
-            return;
+        if (root == NULL) return;
         inOrder(root->left);
         std::cout << "Key : " << root->key << " Value : " << root->value << std::endl;
         inOrder(root->right);

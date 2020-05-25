@@ -2,6 +2,7 @@
 #define SIMPLE_INTERPRETER_VALUE_H
 
 #include <string>
+#include <ostream>
 
 using namespace std;
 
@@ -34,6 +35,17 @@ public:
     double getDoubleValue() const;
 
     string toString() const;
+
+    friend ostream &operator<<(ostream &os, const Value &value);
+
+    bool operator<(const Value &rhs) const;
+
+    bool operator>(const Value &rhs) const;
+
+    bool operator<=(const Value &rhs) const;
+
+    bool operator>=(const Value &rhs) const;
+
 };
 
 

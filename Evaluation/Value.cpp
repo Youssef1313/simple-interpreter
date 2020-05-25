@@ -49,3 +49,31 @@ string Value::toString() const {
     if (isBool) return boolValue ? "true" : "false";
     return isInt ? to_string(intValue) : to_string(doubleValue);
 }
+
+ostream &operator<<(ostream &os, const Value &value) {
+    return os << value.toString();
+}
+
+bool Value::operator<(const Value &rhs) const {
+    double lhsValue = boolValue;
+    double rhsValue = rhs.boolValue;
+    if (!isBool)
+        lhsValue = isInt ? intValue : doubleValue;
+
+    if (!rhs.isBool)
+        rhsValue = rhs.isInt ? rhs.intValue : rhs.doubleValue;
+    return lhsValue < rhsValue;
+
+}
+
+bool Value::operator>(const Value &rhs) const {
+    return rhs < *this;
+}
+
+bool Value::operator<=(const Value &rhs) const {
+    return !(rhs < *this);
+}
+
+bool Value::operator>=(const Value &rhs) const {
+    return !(*this < rhs);
+}

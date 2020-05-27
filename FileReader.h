@@ -20,6 +20,7 @@ private:
     ifstream file;
 public:
     FileReader(string filePath);
+
     string readNextLine();
 };
 

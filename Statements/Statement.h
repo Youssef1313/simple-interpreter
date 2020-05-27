@@ -11,6 +11,7 @@ class Statement {
 protected:
     string statement;
     unordered_map<string, Value> *variables;
+
     Statement(string statement, unordered_map<string, Value> *variables);
 
 public:

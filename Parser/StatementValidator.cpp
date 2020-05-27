@@ -5,7 +5,7 @@
 StatementType StatementValidator::validate(string statement) {
     if (AssignmentStatement::isValid(statement)) {
         return ASSIGNMENT;
-    } else if(IfStatement::isValid(statement))
+    } else if (IfStatement::isValid(statement))
         return IF;
     else {
         return INVALID;

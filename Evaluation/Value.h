@@ -8,9 +8,9 @@ using namespace std;
 
 class Value {
 private:
-    bool isBool;
-    bool isInt;
-    bool isDouble;
+    bool isBool = false;
+    bool isInt = false;
+    bool isDouble = false;
     bool boolValue;
     int intValue;
     double doubleValue;

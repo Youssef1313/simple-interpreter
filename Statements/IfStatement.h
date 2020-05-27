@@ -13,11 +13,14 @@ private:
     Statement *conditioned_Statement;
 public:
     IfStatement(const string &statement, unordered_map<string, Value> *variables);
-    static bool isValid(const string& statement);
+
+    static bool isValid(const string &statement);
+
     void execute() override;
 
     //getters are for test purposes.
     const string &getConditionExpression() const;
+
     Statement *getConditionedStatement() const;
 };
 

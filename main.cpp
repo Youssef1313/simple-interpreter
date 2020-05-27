@@ -16,7 +16,7 @@ int main() {
     } catch (string ex) {
         if (ex != "End of file")
             cout << ex << endl;
-    } catch (char const* ex) {
+    } catch (char const *ex) {
         cout << ex << endl;
     }
 

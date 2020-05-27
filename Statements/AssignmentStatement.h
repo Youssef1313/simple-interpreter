@@ -26,8 +26,11 @@ public:
     // Constructor needs variables map, so that execute method can put new value in it.
 
     void execute();
+
     static bool isValid(string statement);
+
     const string &getVariableName() const;
+
     const string &getValueExpression() const;
 
 };

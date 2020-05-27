@@ -10,6 +10,7 @@ template<class k, class v>
 struct HeapNode {
     k key;
     v value;
+
     HeapNode(k key, v value) : key(key), value(value) {}
 };
 
@@ -74,6 +75,7 @@ private:
     bool hasRight(int i) {
         return getRight(i) <= index;
     }
+
     /*
      * this function get node index,
      * then check if node need to be bubbled up.
@@ -96,6 +98,7 @@ private:
 
 public:
     Heap() {}
+
     Heap(int size) {
         arr.reserve(size);
     }
@@ -110,13 +113,13 @@ public:
         for (int i = arr.size(); i; --i) extractMin();
     }
 
-    void print(){
+    void print() {
         cout << "sorted by value :" << endl; /// assuming it is sorted
-        for(unsigned int i = 0; i < arr.size(); ++i)
+        for (unsigned int i = 0; i < arr.size(); ++i)
             cout << "Key : " << (k) arr[i]->key << " Value : " << (v) arr[i]->value << endl;
         cout << endl << endl;
     }
-    
+
 };
 
 

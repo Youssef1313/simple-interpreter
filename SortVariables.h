@@ -9,11 +9,11 @@
 
 void sortVariables(const unordered_map<string, Value> &map);
 
-void sortVariables(const unordered_map<string, Value>&map) {
+void sortVariables(const unordered_map<string, Value> &map) {
     Heap<string, Value> heap(map.size());
     BST<string, Value> bst;
 
-    for (const auto& variable : map) {
+    for (const auto &variable : map) {
         heap.put(variable.first, variable.second);
         bst.put(variable.first, variable.second);
     }

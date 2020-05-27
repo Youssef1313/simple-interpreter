@@ -12,7 +12,6 @@ const string &AssignmentStatement::getValueExpression() const {
 AssignmentStatement::AssignmentStatement(string statement, unordered_map<string, Value> *variables)
         : Statement(statement, variables) {
     int i = 0;
-    while (statement[i] == ' ') i++; // skip any whitespaces at beginning.
     variableName = "";
     while (statement[i] != ' ' && statement[i] != '=') variableName.push_back(statement[i++]);
     i++; // without this, i will be the index of a space or an equal sign.
@@ -33,9 +32,7 @@ void AssignmentStatement::execute() {
 }
 
 bool AssignmentStatement::isValid(string statement) {
-    if (statement.length() == 0) return false;
     int i = 0;
-    while (statement[i] == ' ') i++; // skip leading whitespaces.
     if (!isalpha(statement[i]) && statement[i] != '_')
         return false; // variable must start with letter or underscore. (Same as python rules).
     string variableName = "";

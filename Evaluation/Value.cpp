@@ -26,21 +26,15 @@ double Value::getDoubleValue() const {
 
 Value::Value(bool value) {
     isBool = true;
-    isInt = false;
-    isDouble = false;
     boolValue = value;
 }
 
 Value::Value(int value) {
-    isBool = false;
     isInt = true;
-    isDouble = false;
     intValue = value;
 }
 
 Value::Value(double value) {
-    isBool = false;
-    isInt = false;
     isDouble = true;
     doubleValue = value;
 }

@@ -18,6 +18,10 @@ private:
     string variableName;
     string valueExpression;
 
+    int getEqualCharAndFillVariableName();
+
+    int fillVariableName(int i);
+
 public:
     AssignmentStatement(string statement, unordered_map<string, Value> *variables);
     // Constructor will set variableName and valueExpression.
@@ -25,14 +29,11 @@ public:
     // Constructor here assumes that the statement is always correct.
     // Constructor needs variables map, so that execute method can put new value in it.
 
-    void execute();
-
-    static bool isValid(string statement);
+    void execute() override;
 
     const string &getVariableName() const;
 
     const string &getValueExpression() const;
-
 };
 
 

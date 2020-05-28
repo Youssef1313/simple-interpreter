@@ -3,12 +3,13 @@
 
 void Interpretation::process(string line) {
     // Ignore leading whitespaces.
+    char commentSymbol = '#';
     int startingIndex = 0;
     while (line[startingIndex] == ' ') startingIndex++;
 
     // Read until a comment is encountered.
-    int endingIndex = startingIndex;
-    while (line[endingIndex] != '#') endingIndex++;
+    int  endingIndex = startingIndex;
+    while (endingIndex < (int)line.size() && line[endingIndex] != commentSymbol) endingIndex++;
 
     // If line is empty, return.
     if (startingIndex == endingIndex) return;
@@ -17,7 +18,7 @@ void Interpretation::process(string line) {
     line = line.substr(startingIndex, endingIndex - startingIndex);
 
     Statement *statement = Parser::parse(line, &variables);
-    if (statement != NULL) {
+    if (statement != nullptr) {
         statement->execute();
     }
 

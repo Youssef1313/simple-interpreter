@@ -11,16 +11,17 @@ int main() {
 
     try {
         FileReader reader("Src.txt");
-        while (true)
+        while (true){
             interpretation.process(reader.readNextLine());
+        }
     } catch (string ex) {
         if (ex != "End of file")
             cout << ex << endl;
+        else
+            sortVariables(interpretation.getVariables());
     } catch (char const *ex) {
         cout << ex << endl;
     }
-
-    sortVariables(interpretation.getVariables());
 
     return 0;
 }

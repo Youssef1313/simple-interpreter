@@ -9,13 +9,29 @@ const string &AssignmentStatement::getValueExpression() const {
     return valueExpression;
 }
 
+int AssignmentStatement::fillVariableName(int i) {
+    while (isalpha(statement[i]) || isdigit(statement[i]) || statement[i] == '_')
+        variableName.push_back(statement[i++]);
+    return i;
+}
+
+int AssignmentStatement::getEqualCharAndFillVariableName() {
+    int i = 0;
+    if (!isalpha(statement[i]) && statement[i] != '_')
+        throw string("Variable name must start with a letter or an underscore.");
+
+    i = fillVariableName(i);
+
+    while (statement[i] == ' ') i++; // skip whitespaces.
+    if(statement[i] != '=') throw string("Assignment statement must have '=' character after variable name.\n");
+    return i;
+
+}
+
 AssignmentStatement::AssignmentStatement(string statement, unordered_map<string, Value> *variables)
         : Statement(statement, variables) {
-    int i = 0;
-    variableName = "";
-    while (statement[i] != ' ' && statement[i] != '=') variableName.push_back(statement[i++]);
-    i++; // without this, i will be the index of a space or an equal sign.
-    while (statement[i] == ' ' || statement[i] == '=') i++; // skip any whitespaces or an equal sign.
+    int i = getEqualCharAndFillVariableName() + 1;// without this, 'i' will be the index of an equal sign.
+    while (statement[i] == ' ') i++; // skip any whitespaces.
     valueExpression = statement.substr(i);
 }
 
@@ -28,19 +44,5 @@ void AssignmentStatement::execute() {
     } else {
         it->second = variableValue;
     }
-    //(*variables)[variableName] = variableValue;
 }
 
-bool AssignmentStatement::isValid(string statement) {
-    int i = 0;
-    if (!isalpha(statement[i]) && statement[i] != '_')
-        return false; // variable must start with letter or underscore. (Same as python rules).
-    string variableName = "";
-    while (isalpha(statement[i]) || isdigit(statement[i]) || statement[i] == '_') {
-        variableName.push_back(statement[i]);
-        i++;
-    }
-    while (statement[i] == ' ') i++; // skip leading whitespaces.
-    return statement[i] == '=';
-
-}

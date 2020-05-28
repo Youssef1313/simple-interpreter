@@ -11,10 +11,13 @@ class IfStatement : public Statement {
 private:
     string conditionExpression;
     Statement *conditioned_Statement;
+    const string ifSub = "if ";
+    const string colonSub = ":";
+
+    int getColonPos();
+
 public:
     IfStatement(const string &statement, unordered_map<string, Value> *variables);
-
-    static bool isValid(const string &statement);
 
     void execute() override;
 

@@ -1,29 +1,20 @@
+#include <bits/stdc++.h>
 #include "IfStatement.h"
 #include "../Parser/Parser.h"
 #include "../Evaluation/ExpressionEvaluator.h"
-#include <bits/stdc++.h>
 
-
-bool IfStatement::isValid(const string &statement) {
-    int ifCount, colonCount, if_Pos, colon_Pos;// counters for ifs and colons, they must equal each other.
-    ifCount = colonCount = if_Pos = colon_Pos = 0;
-    const string ifSub = "if ";
-    const string colonSub = ": ";
-
-    /* if "if" isn't at first then garbage was written so statement isn't valid */
-    if (statement.find(ifSub, 0)) return false;
-
-    while ((unsigned int) (if_Pos = statement.find(ifSub, if_Pos)) != (unsigned int) std::string::npos) {
-        ifCount++;
-        if_Pos += ifSub.size();
-        if ((unsigned int) (colon_Pos = statement.find(colonSub, colon_Pos)) !=
-            (unsigned int) std::string::npos) {
-            colonCount++;
-            colon_Pos += colonSub.size();
+int IfStatement::getColonPos() {
+    // if "if" isn't at first then this statement isn't if statement.
+    int ifPos = 0;
+    for(; ifPos < (int)ifSub.size(); ++ifPos){}
+    if(ifPos == (int) ifSub.size()){
+        int colon_Pos;
+        if ((unsigned int) (colon_Pos = statement.find(colonSub, ifSub.size())) !=
+            (unsigned int) std::string::npos && !ifPos) {
+            return colon_Pos;
         }
     }
-    if (!ifCount) return false;
-    return ifCount == colonCount;
+    throw string("The given statement is not an if statement.\n");
 }
 
 void IfStatement::execute() {
@@ -38,16 +29,16 @@ void IfStatement::execute() {
 }
 
 IfStatement::IfStatement(const string &statement, unordered_map<string, Value> *variables) : Statement(statement,
-                                                                                                       variables) {
-    int colon_Pos, if_Pos;
-    string colonSub = ": ", ifSub = "if ";
-    colon_Pos = statement.find(colonSub);
-    if_Pos = statement.find(ifSub);
-    int start = if_Pos + ifSub.size();
-    conditionExpression = statement.substr(start, colon_Pos - start);
-    conditioned_Statement = Parser::parse(statement.substr(colon_Pos + colonSub.size()), variables);
-    if (!conditioned_Statement)
+                                                                                                      variables) {
+    int colon_Pos = getColonPos();
+    conditionExpression = statement.substr(ifSub.size(), colon_Pos - ifSub.size() );
+    try{
+        int i = colon_Pos + colonSub.size();
+        while (statement[i] ==  ' ') i++;
+        conditioned_Statement = Parser::parse(statement.substr(i), variables);
+    } catch (string ex) {
         throw string("Not valid conditioned statement\n");
+    }
 }
 
 const string &IfStatement::getConditionExpression() const {

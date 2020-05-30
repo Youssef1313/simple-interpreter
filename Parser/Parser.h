@@ -6,6 +6,7 @@
 #include "../Statements/AssignmentStatement.h"
 #include "../Statements/IfStatement.h"
 #include "../Evaluation/Value.h"
+#include "../Statements//GotoStatement.h"
 
 
 using namespace std;

@@ -1,5 +1,6 @@
 #include "AssignmentStatement.h"
 #include "../Evaluation/ExpressionEvaluator.h"
+#include "../Utils/HelperMethods.h"
 
 const string &AssignmentStatement::getVariableName() const {
     return variableName;
@@ -10,7 +11,7 @@ const string &AssignmentStatement::getValueExpression() const {
 }
 
 int AssignmentStatement::fillVariableName(int i) {
-    while (isalpha(statement[i]) || isdigit(statement[i]) || statement[i] == '_')
+    while (HelperMethods::isValidCharacter(statement[i])) // alpha, digit, or underscore.
         variableName.push_back(statement[i++]);
     return i;
 }
@@ -22,16 +23,17 @@ int AssignmentStatement::getEqualCharAndFillVariableName() {
 
     i = fillVariableName(i);
 
-    while (statement[i] == ' ') i++; // skip whitespaces.
-    if(statement[i] != '=') throw string("Assignment statement must have '=' character after variable name.\n");
+    HelperMethods::skipWhitespaces(statement, &i);
+
+    if (statement[i] != '=') throw string("Assignment statement must have '=' character after variable name.\n");
     return i;
 
 }
 
 AssignmentStatement::AssignmentStatement(string statement, unordered_map<string, Value> *variables)
         : Statement(statement, variables) {
-    int i = getEqualCharAndFillVariableName() + 1;// without this, 'i' will be the index of an equal sign.
-    while (statement[i] == ' ') i++; // skip any whitespaces.
+    int i = getEqualCharAndFillVariableName() + 1; // without +1, 'i' will be the index of an equal sign.
+    HelperMethods::skipWhitespaces(statement, &i);
     valueExpression = statement.substr(i);
 }
 

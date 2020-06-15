@@ -103,7 +103,7 @@ string ExpressionEvaluator::convertToPostfix() {
     stack<Operator> stack;
     string result = "";
     for (int i = 0; i < (int) expression.length(); i++) {
-        if (expression[i] == ' ') continue;
+        if (isspace(expression[i])) continue;
         if (isOperation(expression[i])) {
             Operator op = UNKNOWN;
             if (isUnaryOperator) {
@@ -143,7 +143,7 @@ string ExpressionEvaluator::convertToPostfix() {
             int j = i + 1;
             while (j < (int) expression.size()) {
                 if (expression[j] == ')') throw string("Invalid expression. Expected expression inside parenthesis.\n");
-                if (expression[j++] == ' ') continue;
+                if (isspace(expression[j++])) continue;
                 break;
             }
             stack.push(LEFT_PARENTHESIS);

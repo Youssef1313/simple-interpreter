@@ -1,13 +1,13 @@
 #include "Interpretation.h"
 #include "Parser/Parser.h"
-#include "HelperMethods.h"
+#include "Utils/HelperMethods.h"
 
 void Interpretation::process(string line) {
     // Ignore leading whitespaces.
     string labelName = "";
     char commentSymbol = '#';
     int startingIndex = 0;
-    while (line[startingIndex] == ' ') startingIndex++;
+    while (isspace(line[startingIndex])) startingIndex++;
     // Read until a comment is encountered.
     int endingIndex = startingIndex;
     while (endingIndex < (int) line.size() && line[endingIndex] != commentSymbol) endingIndex++;
@@ -42,13 +42,12 @@ void Interpretation::process(string line) {
 string Interpretation::checkLabel(string statement, string *labelName) {
     int length = statement.length();
     string variable;
-    if (length > 5 && statement[0] == 'l' && statement[1] == 'a' && statement[2] == 'b' && statement[3] == 'e'
-        && statement[4] == 'l' && statement[5] == ' ') {
-    } else {
+    if (length <= 5 || !HelperMethods::stringStartsWith(statement, "label") || !isspace(statement[5])) {
         return statement;
     }
+
     int index = 6;
-    while (index < length && statement[index] == ' ') index++;
+    HelperMethods::skipWhitespaces(statement, &index);
 
     while (HelperMethods::isValidCharacter(statement[index])) {
         variable.push_back(statement[index]);
@@ -56,14 +55,13 @@ string Interpretation::checkLabel(string statement, string *labelName) {
     }
     *labelName = variable;
 
-    while (index < length && statement[index] == ' ') index++;
+    HelperMethods::skipWhitespaces(statement, &index);
 
     if (index == length || statement[index] != ':') throw string("Invalid label.");
     index++;
-    while (index < length && statement[index] == ' ') index++;
+    HelperMethods::skipWhitespaces(statement, &index);
 
     if (index == length) throw string("Empty label.");
-    //cout << "ToParser::" << statement.substr(index) << "::\n";
     return statement.substr(index);
 
 }

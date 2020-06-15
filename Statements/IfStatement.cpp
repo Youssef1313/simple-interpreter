@@ -5,9 +5,10 @@
 #include "../Utils/Constants.h"
 #include "../Utils/HelperMethods.h"
 
+
 size_t IfStatement::getColonPos() {
-    if (HelperMethods::stringStartsWith(statement, ifSub)) {
-        size_t colon_Pos = statement.find(colonSub, ifSub.size());
+    if (HelperMethods::stringStartsWith(statement, IF_KEYWORD) && isspace(statement[IF_KEYWORD.length()]) ) {
+        size_t colon_Pos = statement.find(colonSub, IF_KEYWORD.length()+1);
         if (colon_Pos != std::string::npos) {
             return colon_Pos;
         }
@@ -29,7 +30,7 @@ void IfStatement::execute() {
 IfStatement::IfStatement(const string &statement, unordered_map<string, Value> *variables) : Statement(statement,
                                                                                                        variables) {
     unsigned int colon_Pos = getColonPos();
-    conditionExpression = statement.substr(ifSub.size(), colon_Pos - ifSub.size());
+    conditionExpression = statement.substr(IF_KEYWORD.length()+1, colon_Pos - (IF_KEYWORD.length()+1));
     try {
         int i = colon_Pos + colonSub.size();
         HelperMethods::skipWhitespaces(statement, &i);

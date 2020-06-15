@@ -11,7 +11,7 @@ class IfStatement : public Statement {
 private:
     string conditionExpression;
     Statement *conditioned_Statement;
-    const string ifSub = "if ";
+    //const string ifSub = "if ";
     const string colonSub = ":";
 
     size_t getColonPos();

@@ -31,7 +31,6 @@ public:
     }
 
     void inOrder() {
-        cout << "sorted by variable name" << endl;
         inOrder(root);
         cout << endl << endl;
     }

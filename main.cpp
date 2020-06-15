@@ -9,12 +9,6 @@ using namespace std;
 
 int main() {
     Interpretation interpretation;
-//    unordered_map<string, Value> myMap;
-//    try {
-//        IfStatement ifStatement("if 2 < 3: x = 5", &myMap);
-//    } catch (string ex) {
-//        cout << "Shouldn't be printed: " << ex << endl;
-//    }
     try {
         FileReader reader("file.txt");
         while (true){

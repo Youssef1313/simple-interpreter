@@ -15,6 +15,13 @@ public:
     static bool isValidCharacter(char c);
 
     /**
+     * @brief Checks if a given character can be contained in a variable name.
+     * @param c The character to check.
+     * @return Returns true if the character is alpha or underscore.
+     */
+    static bool isValidFirstCharacter(char c);
+
+    /**
      * @brief Checks if a given character is a whitespace.
      * @param c The character to check.
      * @return Returns true if the character is either a space or a tab.

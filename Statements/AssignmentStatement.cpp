@@ -2,23 +2,19 @@
 #include "../Evaluation/ExpressionEvaluator.h"
 #include "../Utils/HelperMethods.h"
 
-const string &AssignmentStatement::getVariableName() const {
-    return variableName;
-}
-
-const string &AssignmentStatement::getValueExpression() const {
-    return valueExpression;
-}
 
 int AssignmentStatement::fillVariableName(int i) {
     while (HelperMethods::isValidCharacter(statement[i])) // alpha, digit, or underscore.
         variableName.push_back(statement[i++]);
+    if (HelperMethods::isKeyword(variableName))
+        throw string("Variable name cannot be a keyword.");
     return i;
 }
 
 int AssignmentStatement::getEqualCharAndFillVariableName() {
     int i = 0;
-    if (!isalpha(statement[i]) && statement[i] != '_')
+
+    if (!HelperMethods::isValidFirstCharacter(statement[i]))
         throw string("Variable name must start with a letter or an underscore.");
 
     i = fillVariableName(i);
@@ -26,6 +22,7 @@ int AssignmentStatement::getEqualCharAndFillVariableName() {
     HelperMethods::skipWhitespaces(statement, &i);
 
     if (statement[i] != '=') throw string("Assignment statement must have '=' character after variable name.\n");
+
     return i;
 
 }

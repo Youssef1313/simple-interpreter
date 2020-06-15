@@ -2,6 +2,10 @@
 #include "HelperMethods.h"
 #include "Constants.h"
 
+bool HelperMethods::isValidFirstCharacter(char c) {
+    return isalpha(c) || c == '_';
+}
+
 bool HelperMethods::isValidCharacter(char c) {
     return isdigit(c) || isalpha(c) || c == '_';
 }

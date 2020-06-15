@@ -31,9 +31,6 @@ public:
 
     void execute() override;
 
-    const string &getVariableName() const;
-
-    const string &getValueExpression() const;
 };
 
 

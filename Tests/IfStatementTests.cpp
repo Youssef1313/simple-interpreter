@@ -22,13 +22,13 @@ TEST(IFStatementsTest, assumedValue) {
         catch (string ex) { ASSERT_EQ(ex, "The given statement is not an if statement.\n");}
 
     try { IfStatement ifStatement("if asdffafa : adsfasff", map); }
-    catch (string string1) { ASSERT_EQ(string1, "Not valid conditioned statement\n"); }
+        catch (string string1) { ASSERT_EQ(string1, "Not valid conditioned statement\n"); }
 
     try{ IfStatement ifStatement3("if x_if:: x = 3", map); }
         catch (string ex) { ASSERT_EQ(ex, "Not valid conditioned statement\n");}
 
     //NOTE: parser test
     try{ Parser::parse("adsfasff", map);}
-    catch (string ex) { ASSERT_EQ(ex, "Unexpected StatementType.\n"); }
+        catch (string ex) { ASSERT_EQ(ex, "Unexpected StatementType.\n"); }
 
 }

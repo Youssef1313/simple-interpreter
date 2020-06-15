@@ -34,17 +34,16 @@ void GotoStatement::setLabelData(unordered_map<string, list<Statement *>::iterat
 
 string GotoStatement::checkGoto(string statement) {
     int length = statement.length();
-    if (length <= 5 || !HelperMethods::stringStartsWith(statement, GOTO_KEYWORD) || !isspace(statement[4])) {
-        throw string("Not goto statement.");
+    if (length <= (int)GOTO_KEYWORD.length()+1 || !HelperMethods::stringStartsWith(statement, GOTO_KEYWORD) || !isspace(statement[GOTO_KEYWORD.length()])) {
+        throw string("Not a goto statement.");
     }
 
-    int gotoIndex = 5;
+    int gotoIndex = GOTO_KEYWORD.length()+1;
     string variable = "";
     HelperMethods::skipWhitespaces(statement, &gotoIndex);
 
     while (gotoIndex < length && HelperMethods::isValidCharacter(statement[gotoIndex])) {
-        variable.push_back(statement[gotoIndex]);
-        gotoIndex++;
+        variable.push_back(statement[gotoIndex++]);
     }
     HelperMethods::skipWhitespaces(statement, &gotoIndex);
 
@@ -52,10 +51,5 @@ string GotoStatement::checkGoto(string statement) {
         throw string("Invalid");
     }
 
-    // goto     la bel
-    // 012345
-    // variable = statement.substr(gotoIndex + 1, length - gotoIndex - 1);
-
-    // variable.erase(remove(variable.begin(), variable.end(), ' '), variable.end());
     return variable;
 }

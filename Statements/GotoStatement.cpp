@@ -34,11 +34,12 @@ void GotoStatement::setLabelData(unordered_map<string, list<Statement *>::iterat
 
 string GotoStatement::checkGoto(string statement) {
     int length = statement.length();
-    if (length <= (int)GOTO_KEYWORD.length()+1 || !HelperMethods::stringStartsWith(statement, GOTO_KEYWORD) || !isspace(statement[GOTO_KEYWORD.length()])) {
+    if (length <= (int) GOTO_KEYWORD.length() + 1 || !HelperMethods::stringStartsWith(statement, GOTO_KEYWORD) ||
+        !isspace(statement[GOTO_KEYWORD.length()])) {
         throw string("Not a goto statement.");
     }
 
-    int gotoIndex = GOTO_KEYWORD.length()+1;
+    int gotoIndex = GOTO_KEYWORD.length() + 1;
     string variable = "";
     HelperMethods::skipWhitespaces(statement, &gotoIndex);
 

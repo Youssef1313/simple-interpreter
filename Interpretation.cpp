@@ -1,6 +1,7 @@
 #include "Interpretation.h"
 #include "Parser/Parser.h"
 #include "Utils/HelperMethods.h"
+#include "Utils/Constants.h"
 
 void Interpretation::process(string line) {
     // Ignore leading whitespaces.
@@ -26,27 +27,22 @@ void Interpretation::process(string line) {
             list<Statement *>::iterator it = --fileData.end();
             labelData.insert(pair<string, list<Statement *>::iterator>(labelName, it));
         } else {
-            throw string("The label Variable has been defined before");
+            throw string("The label Variable has been defined before.");
         }
     }
 
-//    if (typeid(*statement) == typeid(GotoStatement)) {
-//        ((GotoStatement *) statement)->setFileData(&fileData);
-//        ((GotoStatement *) statement)->setLabelData(&labelData);
-//    }
     statement->execute();
-
 
 }
 
 string Interpretation::checkLabel(string statement, string *labelName) {
     int length = statement.length();
     string variable;
-    if (length <= 5 || !HelperMethods::stringStartsWith(statement, "label") || !isspace(statement[5])) {
+    if (length <= (int)LABEL_KEYWORD.length() || !HelperMethods::stringStartsWith(statement, LABEL_KEYWORD) || !isspace(statement[LABEL_KEYWORD.length()])) {
         return statement;
     }
 
-    int index = 6;
+    int index = LABEL_KEYWORD.length()+1;
     HelperMethods::skipWhitespaces(statement, &index);
 
     while (HelperMethods::isValidCharacter(statement[index])) {

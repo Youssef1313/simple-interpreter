@@ -19,8 +19,10 @@ void sortVariables(const unordered_map<string, Value> &map) {
     }
 
     heap.sort();
+    cout << "sorted by variable name" << endl;
     bst.inOrder();
 
+    cout << "sorted by value :" << endl;
     heap.print();
 }
 

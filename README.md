@@ -94,15 +94,27 @@ The following are the operators starting with the highest precedence to the lowe
 
 6. The equality `==` operator.
 
-    They return a boolean indicating whether the left operand is equal to the second operand.
+    It returns a boolean indicating whether the left operand is equal to the second operand.
 
-    Both operands must be of a numeric type (either int or double), or of a boolean type.
+    Both operands must be of numeric types (either int or double), or of boolean types.
 
     This operator always returns a boolean.
 
 7. The logical and `&&` operator.
 
+    It returns a boolean indicating whether the both of its operands are true or not.
+
+    Both operands must be of boolean types.
+
+    This operator always returns a boolean.
+
 8. The logical or `||` operator.
+
+    It returns a boolean indicating whether one or both of its operands are true or not.
+
+    Both operands must be of boolean types.
+
+    This operator always returns a boolean.
 
 ### If statement syntax
 
@@ -116,9 +128,10 @@ The `STATEMENT_TO_EXECUTE_ON_TRUE` is executed if and only if `BOOLEAN_EXPRESSIO
 
 ### Goto statement syntax
 
-the goto statement is used with labels. The label declaration must start with the `label` keyword, followed by a valid label name.
+the goto statement is used with labels. The label declaration must start with the `label` keyword, followed by a valid label name, followed by a colon, and followed by a statement.
 
 **Note:** Two labels cannot have the same name.
+**Note:** The statement **must** be in the same line with the label declaration.
 
 #### Example
 
@@ -127,7 +140,7 @@ To write a program to calculate factorial of 7:
 ```
 N = 7
 fact = 1
-label re:
-fact = fact * N
+label re: fact = fact * N
+N = N - 1
 if N > 1: goto re
 ```

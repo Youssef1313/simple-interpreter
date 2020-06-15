@@ -1,7 +1,3 @@
-//
-// Created by Zayton on 5/28/2020.
-//
-
 #ifndef SIMPLE_INTERPRETER_GOTOSTATEMENT_H
 #define SIMPLE_INTERPRETER_GOTOSTATEMENT_H
 

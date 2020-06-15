@@ -1,9 +1,6 @@
-//
-// Created by Zayton on 5/28/2020.
-//
-
 #include "GotoStatement.h"
-#include "../HelperMethods.h"
+#include "../Utils/Constants.h"
+#include "../Utils/HelperMethods.h"
 
 list<Statement *> *GotoStatement::fileData;
 unordered_map<string, list<Statement *>::iterator> *GotoStatement::labelData;
@@ -14,7 +11,6 @@ GotoStatement::GotoStatement(string statement, unordered_map<string, Value> *var
 }
 
 void GotoStatement::execute() {
-    //cout << "Executing goto\n";
     auto it = labelData->find(labelName);
     if (it == labelData->end())
         throw string("Label not found");
@@ -38,20 +34,19 @@ void GotoStatement::setLabelData(unordered_map<string, list<Statement *>::iterat
 
 string GotoStatement::checkGoto(string statement) {
     int length = statement.length();
-    int gotoIndex = 0;
-    string variable = "";
-    if (length > 5 && statement[0] == 'g' && statement[1] == 'o' && statement[2] == 't' && statement[3] == 'o'
-        && statement[4] == ' ') {
-        gotoIndex = 4;
-    } else {
-        throw string("Not goto statement");
+    if (length <= 5 || !HelperMethods::stringStartsWith(statement, GOTO_KEYWORD) || !isspace(statement[4])) {
+        throw string("Not goto statement.");
     }
-    while (gotoIndex < length && statement[gotoIndex] == ' ') gotoIndex++;
+
+    int gotoIndex = 5;
+    string variable = "";
+    HelperMethods::skipWhitespaces(statement, &gotoIndex);
+
     while (gotoIndex < length && HelperMethods::isValidCharacter(statement[gotoIndex])) {
         variable.push_back(statement[gotoIndex]);
         gotoIndex++;
     }
-    while (gotoIndex < length && statement[gotoIndex] == ' ') gotoIndex++;
+    HelperMethods::skipWhitespaces(statement, &gotoIndex);
 
     if (gotoIndex != length) {
         throw string("Invalid");

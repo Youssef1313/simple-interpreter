@@ -2,12 +2,11 @@
 #include "IfStatement.h"
 #include "../Parser/Parser.h"
 #include "../Evaluation/ExpressionEvaluator.h"
+#include "../Utils/Constants.h"
+#include "../Utils/HelperMethods.h"
 
 size_t IfStatement::getColonPos() {
-    // if "if" isn't at first then this statement isn't if statement.
-    size_t ifPos = 0;
-    for (; ifPos < ifSub.size() && statement[ifPos] == ifSub[ifPos]; ++ifPos) {}
-    if (ifPos == ifSub.size()) {
+    if (HelperMethods::stringStartsWith(statement, ifSub)) {
         size_t colon_Pos = statement.find(colonSub, ifSub.size());
         if (colon_Pos != std::string::npos) {
             return colon_Pos;
@@ -32,8 +31,8 @@ IfStatement::IfStatement(const string &statement, unordered_map<string, Value> *
     unsigned int colon_Pos = getColonPos();
     conditionExpression = statement.substr(ifSub.size(), colon_Pos - ifSub.size());
     try {
-        unsigned int i = colon_Pos + colonSub.size();
-        while (statement[i] == ' ') i++;
+        int i = colon_Pos + colonSub.size();
+        HelperMethods::skipWhitespaces(statement, &i);
         conditioned_Statement = Parser::parse(statement.substr(i), variables);
     } catch (string ex) {
         throw string("Not valid conditioned statement\n");

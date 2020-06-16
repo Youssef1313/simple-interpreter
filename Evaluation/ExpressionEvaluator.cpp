@@ -73,18 +73,26 @@ Value ExpressionEvaluator::evaluate() {
             } else if (token == "false") {
                 stack.push(Value(false));
             } else if (token.find('.') != string::npos) { // double
-                stack.push(Value(stof(token)));
+				try {
+                    stack.push(Value(stof(token)));
+				} catch (...) {
+					throw "Invalid number '" + token + "'\n";
+				}
             } else { // int
-                stack.push(Value(stoi(token)));
+				try {
+                    stack.push(Value(stoi(token)));
+				} catch (...) {
+					throw "Invalid number '" + token + "'\n";
+				}
             }
         } else if (isUnaryOperator(op)) {
-            if (stack.size() < 1) throw "Invalid expression. Missing an operand.";
+            if (stack.size() < 1) throw string("Invalid expression. Missing an operand.");
             Value top = stack.top();
             stack.pop();
             stack.push(performOperation(top, UNKNOWN, op));
 
         } else { // Binary operator.
-            if (stack.size() < 2) throw "Invalid expression. Missing an operand.";
+            if (stack.size() < 2) throw string("Invalid expression. Missing an operand.");
             Value operand2 = stack.top();
             stack.pop();
             Value operand1 = stack.top();
@@ -93,7 +101,7 @@ Value ExpressionEvaluator::evaluate() {
         }
     }
     if (stack.size() == 1) return stack.top();
-    throw "Invalid expression.";
+    throw string("Invalid expression.");
 }
 
 string ExpressionEvaluator::convertToPostfix() {
@@ -151,10 +159,10 @@ string ExpressionEvaluator::convertToPostfix() {
             isPreviousAValue = false;
         } else if (expression[i] == ')') {
             // Throw instead of trying to access top in an empty stack.
-            if (stack.size() == 0) throw "Invalid expression. Unexpected token ')'.";
+            if (stack.size() == 0) throw string("Invalid expression. Unexpected token ')'.");
             while (stack.top() != LEFT_PARENTHESIS) {
                 // Throw instead of trying to pop in an empty stack.
-                if (stack.size() == 0) throw "Invalid expression. Unexpected token ')'.";
+                if (stack.size() == 0) throw string("Invalid expression. Unexpected token ')'.");
                 result.push_back(' ');
                 result += getTokenFromOperator(stack.top());
                 stack.pop();
@@ -163,7 +171,7 @@ string ExpressionEvaluator::convertToPostfix() {
             isPreviousAValue = false;
             isUnaryOperator = false;
         } else {
-            if (isPreviousAValue) throw "Invalid expression. Expected an operator.";
+            if (isPreviousAValue) throw string("Invalid expression. Expected an operator.");
             if (isalpha(expression[i]) || expression[i] == '_') {
                 string variableName = "";
                 while (isdigit(expression[i]) || isalpha(expression[i]) || expression[i] == '_') {
@@ -193,7 +201,7 @@ string ExpressionEvaluator::convertToPostfix() {
 
     while (!stack.empty()) {
         if (stack.top() == LEFT_PARENTHESIS)
-            throw "Invalid expression. Missing parenthesis.";
+            throw string("Invalid expression. Missing parenthesis.");
         result.push_back(' ');
         result += getTokenFromOperator(stack.top());
         stack.pop();

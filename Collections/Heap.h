@@ -113,10 +113,9 @@ public:
         for (int i = arr.size(); i; --i) extractMin();
     }
 
-    void print() {
+    void print(QString *result) {
         for (unsigned int i = 0; i < arr.size(); ++i)
-            cout << "Key : " << (k) arr[i]->key << " Value : " << (v) arr[i]->value << endl;
-        cout << endl << endl;
+            result->append(((string)arr[i]->key).c_str()).append(" = ").append(arr[i]->value.toString().c_str()).append('\n');
     }
 
 };

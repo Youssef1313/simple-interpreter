@@ -30,9 +30,8 @@ public:
         root = insert(root, key, value);
     }
 
-    void inOrder() {
-        inOrder(root);
-        cout << endl << endl;
+    void inOrder(QString *result) {
+        inOrder(root, result);
     }
 
 private:
@@ -48,11 +47,11 @@ private:
         return root;
     }
 
-    void inOrder(struct Node<k, v> *root) {
+    void inOrder(struct Node<k, v> *root, QString *result) {
         if (root == NULL) return;
-        inOrder(root->left);
-        std::cout << "Key : " << root->key << " Value : " << root->value << std::endl;
-        inOrder(root->right);
+        inOrder(root->left, result);
+        result->append(((string)root->key).c_str()).append(" = ").append(root->value.toString().c_str()).append('\n');
+        inOrder(root->right, result);
     }
 };
 

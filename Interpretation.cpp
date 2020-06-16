@@ -20,6 +20,7 @@ void Interpretation::process(string line) {
     line = line.substr(startingIndex, endingIndex - startingIndex);
     line = checkLabel(line, &labelName);
     Statement *statement = Parser::parse(line, &variables);
+
     fileData.push_back(statement);
     if ((labelName).length() != 0) {
         auto iter = labelData.find(labelName);
@@ -37,27 +38,36 @@ void Interpretation::process(string line) {
 
 string Interpretation::checkLabel(string statement, string *labelName) {
     int length = statement.length();
-    string variable;
-    if (length <= (int)LABEL_KEYWORD.length() || !HelperMethods::stringStartsWith(statement, LABEL_KEYWORD) || !isspace(statement[LABEL_KEYWORD.length()])) {
+
+    // Make sure statement starts with "label" and followed by a whitespace before continuing.
+    if (!HelperMethods::stringStartsWith(statement, LABEL_KEYWORD) || !isspace(statement[LABEL_KEYWORD.length()])) {
         return statement;
     }
 
-    int index = LABEL_KEYWORD.length()+1;
+    // Skip all whitespaces after "label "
+    int index = LABEL_KEYWORD.length() + 1;
     HelperMethods::skipWhitespaces(statement, &index);
 
+    // After "label " and any whitespaces, this is the start of the label name. Parse while the char is valid.
+    string variable;
     while (HelperMethods::isValidCharacter(statement[index])) {
         variable.push_back(statement[index]);
         index++;
     }
     *labelName = variable;
 
+    // Skip whitespaces, if any.
     HelperMethods::skipWhitespaces(statement, &index);
 
+    // After label LABEL_NAME and any whitespaces, the ":" should be expected.
     if (index == length || statement[index] != ':') throw string("Invalid label.");
+
+    // After the label name, ignore any whitespaces.
     index++;
     HelperMethods::skipWhitespaces(statement, &index);
 
-    if (index == length) throw string("Empty label.");
+    // At this point, the index should be at the beginning of the real statement. (label LABEL_NAME: real_statement)
+    if (index == length) throw string("Expected a statement in the same line with label declaration.");
     return statement.substr(index);
 
 }

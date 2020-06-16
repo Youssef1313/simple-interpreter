@@ -9,6 +9,11 @@ This is a simple interpreter written in C++ that has the following features:
 - If statements
 - Goto statements
 - Comments
+- Text editor with syntax highlighting
+
+**Note:** This project is done using CLion, CMake, and Qt. If you don't have any of these installed, most likely you won't be able to compile it.
+
+**Note2:** There is already a compiled version in the *EXE* folder.
 
 ## Syntax
 

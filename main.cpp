@@ -1,30 +1,14 @@
-#include <iostream>
-#include <string>
-#include "Interpretation.h"
-#include "FileReader.h"
-#include "SortVariables.h"
-#include "Statements/IfStatement.h"
+#include <QApplication>
+#include "MainWindow.h"
 
 using namespace std;
 
-int main() {
-    Interpretation interpretation;
-    try {
-        FileReader reader("file.txt");
-        while (true){
-            string line = reader.readNextLine();
-            interpretation.process(line);
-        }
-    } catch (string ex) {
-        if (ex != "End of file")
-            cout << ex << endl;
-        else
-            sortVariables(interpretation.getVariables());
-    } catch (char const *ex) {
-        cout << ex << endl;
-    }
-
-    return 0;
+int main(int argc, char *argv[]) {
+    QApplication application(argc, argv);
+    MainWindow window;
+    window.setWindowState(Qt::WindowMaximized);
+    window.show();
+    return application.exec();
 }
 
 

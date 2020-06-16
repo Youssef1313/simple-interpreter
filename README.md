@@ -149,3 +149,7 @@ label re: fact = fact * N
 N = N - 1
 if N > 1: goto re
 ```
+
+## Text editor
+
+![image](https://user-images.githubusercontent.com/31348972/84795701-1e1a1f00-aff8-11ea-9b2e-5f50687836fd.png)
